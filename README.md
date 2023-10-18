@@ -7,3 +7,5 @@ Utilise les differents Hooks principaux :
    - useEffect (pour consumer l'api a l'initialisation des composants)
    - des fonctions en props pour deleger des actions aux compenents enfants
    - de la gestion de contenu en localStorage
+
+![image](https://github.com/ohugonnot/react-weather-app/assets/13014954/21fe6353-7123-4b89-9c2f-73c7342b3b61)
