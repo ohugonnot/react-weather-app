@@ -1,13 +1,13 @@
 import "./City.css"
 import {useEffect, useState} from "react";
 
-const City = ({city = null, addToFavoris, removeFromFavoris, favoris = false}) => {
+const City = ({city = null, addToFavoris, removeFromFavoris}) => {
 
     // Je déclare mes states qui vont faire bouger ma vue
     const [info, setInfo] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState("truc")
-    const [isFavoris, setIsFavoris] = useState(favoris)
+    const [error, setError] = useState(null)
+    const [isFavoris, setIsFavoris] = useState(city.favoris)
 
     // Au chargement je lance mon fetch des data
     useEffect(() => {
@@ -25,7 +25,7 @@ const City = ({city = null, addToFavoris, removeFromFavoris, favoris = false}) =
                     console.log(response)
                     let data = await response.json()
                     setInfo(data)
-                    if (favoris) {
+                    if (isFavoris) {
                         addToFavoris({...data, favoris: true})
                     }
                 } catch (e) {
@@ -80,36 +80,34 @@ const City = ({city = null, addToFavoris, removeFromFavoris, favoris = false}) =
 
     return (
         <>
-            {info &&
-                <div className="row d-flex justify-content-center px-3">
-                    <div
-                        style={{backgroundImage: `url(${image})`}}
-                        className={`card ${(isLoading || error) && "d-flex align-items-center justify-content-center"}`}>
-                        {isLoading &&
-                            <div className="text-center med-font">Loading...</div>
-                        }
-                        {!isLoading && error &&
-                            <div className="text-center med-font">{error}</div>
-                        }
-                        {!isLoading && !error &&
-                            <>
-                                <div className="float-left ml-2 mt-2">
-                                    <i onClick={toogleFavoris}
-                                       className={`fa ${isFavoris ? "fa-heart" : "fa-heart-o"} cursor-pointer`}
-                                       aria-hidden="true"></i>
-                                    <i onClick={refresh} className="fa fa-refresh ml-2 cursor-pointer"
-                                       aria-hidden="true"></i>
-                                </div>
-                                <h2 className="ml-auto mr-4 mt-3 mb-0">{name}</h2>
-                                <p className="ml-auto mr-4 mb-0 med-font">{description}</p>
-                                <h1 className="ml-auto mr-4 large-font">{temperature}&#176;</h1>
-                                <p className="time-font mb-0 ml-4 mt-auto">{time}</p>
-                                <p className="ml-4 mb-4">{date}</p>
-                            </>
-                        }
-                    </div>
+            <div className="row d-flex justify-content-center px-3">
+                <div
+                    style={{backgroundImage: `url(${image})`}}
+                    className={`card ${(isLoading || error) && "d-flex align-items-center justify-content-center"}`}>
+                    {isLoading &&
+                        <div className="text-center med-font">Loading...</div>
+                    }
+                    {!isLoading && error &&
+                        <div className="text-center med-font">{error}</div>
+                    }
+                    {!isLoading && !error && info &&
+                        <>
+                            <div className="float-left ml-2 mt-2">
+                                <i onClick={toogleFavoris}
+                                   className={`fa ${isFavoris ? "fa-heart" : "fa-heart-o"} cursor-pointer`}
+                                   aria-hidden="true"></i>
+                                <i onClick={refresh} className="fa fa-refresh ml-2 cursor-pointer"
+                                   aria-hidden="true"></i>
+                            </div>
+                            <h2 className="ml-auto mr-4 mt-3 mb-0">{name}</h2>
+                            <p className="ml-auto mr-4 mb-0 med-font">{description}</p>
+                            <h1 className="ml-auto mr-4 large-font">{temperature}&#176;</h1>
+                            <p className="time-font mb-0 ml-4 mt-auto">{time}</p>
+                            <p className="ml-4 mb-4">{date}</p>
+                        </>
+                    }
                 </div>
-            }
+            </div>
         </>
 
     )

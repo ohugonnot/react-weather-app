@@ -49,7 +49,7 @@ function App() {
                 <Search onSelectedCity={onSelectedCity}></Search>
                 {cities.map((city) =>
                     <City addToFavoris={addToFavoris} removeFromFavoris={removeFromFavoris} key={city.id}
-                          city={city} favoris={city.favoris}></City>
+                          city={city}></City>
                 )}
             </div>
         </>

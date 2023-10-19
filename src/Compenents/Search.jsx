@@ -24,7 +24,7 @@ const Search = ({onSelectedCity}) => {
                     setSuggestions(response.list.map((suggestion) => ({
                         value: suggestion.id,
                         label: `${suggestion.name}, ${suggestion.sys.country}`,
-                        city: suggestion,
+                        city: {...suggestion, favoris: false},
                     })).filter((v, i, a) => a.findIndex(v2 => (v2.label === v.label)) === i));
                 }
                 setLoading(false);
